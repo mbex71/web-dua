@@ -1,13 +1,20 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const path = require("path");
 
 module.exports = {
   entry: {
     main: "./src/index",
   },
-  cache: false,
-  devtool: "source-map",
   mode: "development",
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "dist"),
+    },
+    port: 3002,
+  },
+  // cache: false,
+  // devtool: "source-map",
 
   optimization: {
     minimize: false,
@@ -21,16 +28,17 @@ module.exports = {
     extensions: [".jsx", ".js", ".json"],
   },
 
-  externals: {
-    react: "React",
-    "react-dom": "ReactDOM",
-  },
+  // externals: {
+  //   react: "React",
+  //   "react-dom": "ReactDOM",
+  // },
 
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         loader: require.resolve("babel-loader"),
+        exclude: /node_modules/,
         options: {
           rootMode: "upward",
           presets: [require.resolve("@babel/preset-react")],
@@ -41,24 +49,20 @@ module.exports = {
 
   plugins: [
     new ModuleFederationPlugin({
-      name: "_federation_website2",
+      name: "app2",
       library: {
         type: "var",
-        name: "_federation_website2",
+        name: "app2",
       },
       filename: "remoteEntry.js",
-      // remotes: {
-      //   website1: "website1_main",
-      // },
-      // shared is not support now
-      shared: ["react", "react-dom"],
       exposes: {
-        Title: "./src/Title",
+        "./Title": "./src/Title",
       },
+      shared: ["react", "react-dom"],
     }),
     new HtmlWebpackPlugin({
       template: "./src/template.html",
-      chunks: ["main"],
+      // chunks: ["main"],
     }),
   ],
 };
