@@ -21,7 +21,8 @@ module.exports = {
   },
 
   output: {
-    publicPath: "http://localhost:3002/",
+    // publicPath: "http://localhost:3002/",
+    publicPath: "https://main--stupefied-kare-218880.netlify.app/",
   },
 
   resolve: {
