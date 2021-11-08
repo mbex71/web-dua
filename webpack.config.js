@@ -38,9 +38,6 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    "Access-Control-Allow-Origin": "*",
-  },
 
   plugins: [
     new ModuleFederationPlugin({
