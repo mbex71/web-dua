@@ -59,7 +59,15 @@ module.exports = {
       exposes: {
         "./Title": "./src/Title",
       },
-      shared: ["react", "react-dom"],
+      // shared: ["react", "react-dom"],
+      shared: {
+        react: {
+          eager: true,
+        },
+        "react-dom": {
+          eager: true,
+        },
+      },
     }),
     new HtmlWebpackPlugin({
       template: "./src/template.html",
